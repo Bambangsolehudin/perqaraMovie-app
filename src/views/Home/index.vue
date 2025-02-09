@@ -74,18 +74,6 @@ export default {
     return {
       movies: [],
       featuredMovies: [],
-      discoverMovies: [
-        { id: 1, title: 'Wonder Woman 1984', year: 2020, rating: 7.0, image: '/carousel-img.png' },
-        { id: 2, title: 'Below Zero', year: 2021, rating: 6.4, image: '/carousel-img.png' },
-        { id: 3, title: 'The Little Things', year: 2021, rating: 6.3, image: '/carousel-img.png' },
-        { id: 4, title: 'Outside the Wire', year: 2021, rating: 6.5, image: '/carousel-img.png' },
-        { id: 5, title: 'Black Water: Abyss', year: 2020, rating: 5.9, image: '/carousel-img.png' },
-        { id: 5, title: 'Black Water: Abyss', year: 2020, rating: 5.9, image: '/carousel-img.png' },
-        { id: 5, title: 'Black Water: Abyss', year: 2020, rating: 5.9, image: '/carousel-img.png' },
-        { id: 5, title: 'Black Water: Abyss', year: 2020, rating: 5.9, image: '/carousel-img.png' },
-        { id: 5, title: 'Black Water: Abyss', year: 2020, rating: 5.9, image: '/carousel-img.png' },
-        { id: 5, title: 'Black Water: Abyss', year: 2020, rating: 5.9, image: '/carousel-img.png' },
-      ]
     };
   },
   methods: {

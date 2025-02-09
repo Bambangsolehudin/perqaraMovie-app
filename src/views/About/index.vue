@@ -107,7 +107,6 @@ import axios from 'axios';
 
 export default {
   components: { DefaultLayout, Swiper, SwiperSlide, CardFilm },
-
   data() {
     return {
       genres: ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror'],
@@ -183,7 +182,7 @@ export default {
   },
   watch: {
     '$route.query': {
-      handler(newQuery) {
+      handler() {
         this.fetchDetail(); 
         this.fetchMovies();
         window.scrollTo(0, 0);
