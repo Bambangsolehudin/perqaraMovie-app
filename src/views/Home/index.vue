@@ -47,12 +47,12 @@
           <div class="flex flex-col gap-4 xl:flex-row lg:flex-row justify-between items-center ">
             <h2 class="relative custom-border text-xl font-semibold">Discover Movies</h2>
             <div class="space-x-4">
-              <button class="bg-red-600 px-4 py-1 rounded-full shadow-md">Popularity</button>
-              <button class="bg-gray-700 px-4 py-1 rounded-full shadow-md">Release Date</button>
+              <button :class="selectedSort == 'votes-desc' ? 'bg-red-600' : 'bg-gray-700'" class=" px-4 py-1 rounded-full shadow-md cursor-pointer" @click.prevent="selectedSort='votes-desc'">Popularity</button>
+              <button :class="selectedSort !== 'votes-desc' ? 'bg-red-600' : 'bg-gray-700'" class="px-4 py-1 rounded-full shadow-md cursor-pointer" @click.prevent="selectedSort='release-asc'">Release Date</button>
             </div>
           </div>
           <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-6 justify-center">
-            <div v-for="movie in movies" :key="movie.id" class="bg-[#1E232B] rounded overflow-hidden relative">
+            <div v-for="movie in sortedMovies" :key="movie.id" class="bg-[#1E232B] rounded overflow-hidden relative">
               <CardFilm :movie="movie" />
             </div>
           </div>
@@ -76,6 +76,9 @@ export default {
       movies: [],
       featuredMovies: [],
       load: false,
+      selectedSort: 'votes-desc',
+      // release-asc
+
     };
   },
   methods: {
@@ -89,10 +92,21 @@ export default {
         const data = await response.json();
         console.log('movie', data?.Search );
 
-        this.movies = data.Search.map((movie) => ({
-          ...movie,
-          rating: Math.floor(Math.random() * 3) + 7, // Rating random karena API tidak menyediakannya
-        }));
+        if (data.Search) {
+          const newData = data.Search.map((movie) => ({
+            ...movie,
+            rating: Math.floor(Math.random() * 3) + 7, // Rating random karena API tidak menyediakannya
+          }));
+          const movieDetails = await Promise.all(
+            newData.map(async (movie) => {
+              const detailsResponse = await fetch(`${apiUrl}/?apikey=${apiKey}&i=${movie.imdbID}`);
+              return await detailsResponse.json();
+            })
+          );
+          this.movies = movieDetails;
+        }
+
+        
         this.movies.rating = await Math.floor(Math.random() * 3) + 7
       } catch (error) {
         console.error("Failed to fetch movies:", error);
@@ -127,7 +141,21 @@ export default {
 
     }
   },
-
+  computed: {
+        sortedMovies() {
+        // menggunakan sorted manual karena omdbapi API tidak menyediakan sort
+        return [...this.movies].sort((a, b) => {
+            switch (this.selectedSort) {
+            case "votes-desc":
+            return parseInt(b.imdbVotes.replace(/,/g, '')) - parseInt(a.imdbVotes.replace(/,/g, ''));
+            case 'release-asc':
+                return new Date(a.Released) - new Date(b.Released);
+            default:
+                return 0;
+            }
+        });
+        }
+    },
   mounted() {
     this._init()
   }
