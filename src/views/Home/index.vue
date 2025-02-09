@@ -1,6 +1,7 @@
 <template>
   <DefaultLayout>
-    <template #section1>
+    <div class="h-200 text-center text-xl" v-if="load">Loading...</div>
+    <template v-if="!load" #section1>
       <div class="my-8 flex justify-center ">
         <div class="w-11/12 xl:w-10/12 lg:w-10/12 md:w-10/12 px-4">
           <swiper 
@@ -38,7 +39,7 @@
         </div>
       </div>
     </template>
-    <div class="relative flex justify-center mt-[-240px]">
+    <div v-if="!load" class="relative flex justify-center mt-[-240px]">
       <div class="w-12/12 xl:w-10/12 lg:w-10/12">
         <div class="absolute inset-0 h-1/3"></div>
         <div class="relative px-8 py-8 ">
@@ -74,10 +75,12 @@ export default {
     return {
       movies: [],
       featuredMovies: [],
+      load: false,
     };
   },
   methods: {
     async fetchMovie () {
+      this.load = true;
       const apiKey = import.meta.env.VITE_OMDB_API_KEY;
       const apiUrl = import.meta.env.VITE_OMDB_URL;
 
@@ -93,9 +96,12 @@ export default {
         this.movies.rating = await Math.floor(Math.random() * 3) + 7
       } catch (error) {
         console.error("Failed to fetch movies:", error);
+      } finally {
+        this.load = false;
       }
     },
     async fetchfeaturedMovies () {
+      this.load = true
       const apiKey = import.meta.env.VITE_OMDB_API_KEY;
       const apiUrl = import.meta.env.VITE_OMDB_URL;
 
@@ -110,13 +116,20 @@ export default {
         }));
       } catch (error) {
         console.error("Failed to fetch movies:", error);
+      } finally {
+        this.load = false;
       }
     },
+
+    async _init() {
+      await this.fetchMovie()
+      await this.fetchfeaturedMovies()
+
+    }
   },
 
   mounted() {
-    this.fetchMovie();
-    this.fetchfeaturedMovies();
+    this._init()
   }
 };
 </script>

@@ -1,62 +1,61 @@
 <template>
-    <DefaultLayout :load="load">
-        <!-- Discover Movies -->
-        
-        <div class="flex justify-center">
-            <div class="w-12/12 xl:w-10/12 lg:10/12 mt-[-280px]">
-                <div class="relative px-8 py-8">
-                    <div class="flex mb-10">
-                        <h2 class="relative custom-border text-xl xl:text-2xl lg:text-2xl font-semibold">Discover Movies</h2>
-                    </div>
-                    <div class="flex flex-col xl:flex-row lg:flex-row gap-12">
-                        <aside class="w-4/4 xl:w-1/4 lg:w-1/4">
-                            <div class="rounded-xl bg-gradient-to-b from-[#0E1723] to-[#1E232A] p-6">
-                                <div class="mb-6">
-                                    <h2 class="text-lg font-semibold mb-4">Sort Result By</h2>
-                                    <select class="bg-gray-700 text-white p-2 rounded w-full">
-                                        <option>Popularity</option>
-                                    </select>
-                                </div>
-                                <h2 class="text-lg font-semibold mb-4">Genres</h2>
-                                <ul class="space-y-2">
-                                    <li v-for="genre in genres" :key="genre">
-                                    <div class="label flex justify-between">
-                                        <h6>{{ genre }}</h6>
-                                        <input 
-                                        type="radio" 
-                                        class="w-5 bg-gray-600 border-gray-600 accent-red-500 rounded-xl" 
-                                        :value="genre"
-                                        v-model="selectedGenre"
-                                        @change="handleGenreChange"
-                                        />
-                                    </div>
-                                    </li>
-                                </ul>
+<DefaultLayout>
+    <div class="h-200 text-center text-xl" v-if="load">Loading...</div>
+    <div class="flex justify-center">
+        <div class="w-12/12 xl:w-10/12 lg:10/12 mt-[-280px]">
+            <div class="relative px-8 py-8">
+                <div class="flex mb-10">
+                    <h2 class="relative custom-border text-xl xl:text-2xl lg:text-2xl font-semibold">Discover Movies</h2>
+                </div>
+                <div class="flex flex-col xl:flex-row lg:flex-row gap-12">
+                    <aside class="w-4/4 xl:w-1/4 lg:w-1/4">
+                        <div class="rounded-xl bg-gradient-to-b from-[#0E1723] to-[#1E232A] p-6">
+                            <div class="mb-6">
+                                <h2 class="text-lg font-semibold mb-4">Sort Result By</h2>
+                                <select class="bg-gray-700 text-white p-2 rounded w-full">
+                                    <option>Popularity</option>
+                                </select>
                             </div>
-                        </aside>
-                        <div v-if="movies.length < 1" class="load h-100 w-3/4">
-                            <h6 class="text-center text-2xl mt-4">Tidak ada Data .. </h6>
+                            <h2 class="text-lg font-semibold mb-4">Genres</h2>
+                            <ul class="space-y-2">
+                                <li v-for="genre in genres" :key="genre">
+                                <div class="label flex justify-between">
+                                    <h6>{{ genre }}</h6>
+                                    <input 
+                                    type="radio" 
+                                    class="w-5 bg-gray-600 border-gray-600 accent-red-500 rounded-xl" 
+                                    :value="genre"
+                                    v-model="selectedGenre"
+                                    @change="handleGenreChange"
+                                    />
+                                </div>
+                                </li>
+                            </ul>
                         </div>
-                        <section v-else class="w-4/4 xl:w-3/4 lg:w-3/4">
-                            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 justify-center">
-                                <div v-for="(movie, i) in movies" :key="i" class="bg-[#1E232B] rounded overflow-hidden relative">
-                                    <CardFilm :movie="movie" />
-                                </div>
-                            </div>
-                            <div class="flex justify-center mt-10">
-                                <button class=" text-white px-10 py-2 rounded-full text-sm  cursor-pointer" :class="load ? 'bg-gray-600' : 'bg-red-500'" 
-                                    @click.prevent="this.page+=1"
-                                    :disabled="load"
-                                > {{  load ? 'Loading..' : 'Load More' }}
-                            
-                            </button>
-                            </div>
-                        </section>
+                    </aside>
+                    <div v-if="movies.length < 1" class="load h-100 w-3/4">
+                        <h6 class="text-center text-2xl mt-4">Tidak ada Data .. </h6>
                     </div>
+                    <section v-else class="w-4/4 xl:w-3/4 lg:w-3/4">
+                        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 justify-center">
+                            <div v-for="(movie, i) in movies" :key="i" class="bg-[#1E232B] rounded overflow-hidden relative">
+                                <CardFilm :movie="movie" />
+                            </div>
+                        </div>
+                        <div class="flex justify-center mt-10">
+                            <button class=" text-white px-10 py-2 rounded-full text-sm  cursor-pointer" :class="load ? 'bg-gray-600' : 'bg-red-500'" 
+                                @click.prevent="this.page+=1"
+                                :disabled="load"
+                            > {{  load ? 'Loading..' : 'Load More' }}
+                        
+                        </button>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
-    </DefaultLayout>
+    </div>
+</DefaultLayout>
 </template>
 
 <script>

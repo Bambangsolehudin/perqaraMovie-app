@@ -1,6 +1,6 @@
 <template>
   <DefaultLayout :bgImage="detail?.Poster">
-    <div class="h-200 text-center" v-if="load">Loading...</div>
+    <div class="h-200 text-center text-xl" v-if="load">Loading...</div>
     <!-- Discover Movies -->
      <div v-else class="">
        <div class="mt-[-256px] xl:mt-[-216px] lg:mt-[-216px] md:mt-[-216px] flex justify-center w-full my-16">
