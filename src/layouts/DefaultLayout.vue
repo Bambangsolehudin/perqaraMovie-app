@@ -72,9 +72,7 @@
        <slot name="section1"></slot>
        <div v-if="!bgImage" class="h-76  bg-white/5"></div>
        <div v-else :style="{ backgroundImage: bgImage ? `url(${bgImage})` : '' }" class="h-136 opacity-20 bg-cover  bg-no-repeat w-full flex flex-col-reverse">
-         <div class="w-full h-20 bg-black/60 p-6 ">
-              <h6 v-if="load" class="text-2xl">Loading ..... </h6>    
-         </div>
+         <div class="w-full h-20 bg-black/60 p-6 "></div>
        </div>
      </div>
     <slot></slot>
@@ -128,7 +126,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 
 export default {
-  props: ["bgImage", "load"],
+  props: ["bgImage"],
   components: { Swiper, SwiperSlide },
   data() {
     return {
@@ -165,6 +163,8 @@ export default {
       selectResult(result) {
         this.searchQuery = result;
         this.showDropdown = false;
+        console.log('result', result);
+        
         this.$router.push(`/about?id=${result?.imdbID}`)
       },
 

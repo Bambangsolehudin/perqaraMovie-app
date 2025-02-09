@@ -1,96 +1,99 @@
 <template>
-  <DefaultLayout :load="load" :bgImage="detail?.Poster">
+  <DefaultLayout :bgImage="detail?.Poster">
+    <div class="h-200 text-center" v-if="load">Loading...</div>
     <!-- Discover Movies -->
-      <div class="mt-[-256px] xl:mt-[-216px] lg:mt-[-216px] md:mt-[-216px] flex justify-center w-full my-16">
-        <div class="flex gap-2 xl:gap-20 lg:gap-20 md:gap-20 w-11/12 xl:w-10/12 lg:w-10/12 ">
-          <div class="img w-full xl:w-auto lg:w-auto md:w-auto z-40">
-            <img :src="detail?.Poster" class="h-46 xl:h-[330px] lg:h-[330px] md:h-[330px] rounded-xl bg-white" alt="">
-          </div>
-          <div class="desc">
-            <div class="base">
-              <p class="text-md">{{ detail?.Year }}</p>
-              <h6 class="text-white text-xl xl:text-4xl lg:text-4xl md:text-4xl">{{ detail?.Title }}</h6>
-              <p class="text-white">
-                {{ detail?.Type }}
-              </p>
-            </div>
-            <div class="complex gap-10 mt-16 hidden xl:flex lg:flex md:flex">
-              <div class="flex gap-x-4 pr-10 border-r-[2px] border-gray-600">
-                <div class="text-4xl">⭐ {{ detail?.imdbRating }}</div>
-                <div class="flex flex-col">
-                  <h6 class="text-sm text-gray-500">USER SCORE</h6>
-                  <h6 class="text-white">{{ detail?.imdbVotes }} VOTES</h6>
-                </div>
-              </div>
-              <div class="flex flex-col pr-10 border-r-[2px] border-gray-600">
-                <h6 class="text-sm text-white/50 font-semibold">STATUS</h6>
-                <h6 class="text-white">{{ detail?.Released ? 'RELEASED' : '-'}}</h6>
-              </div>
-              <div class="flex flex-col pr-10 border-r-[2px] border-gray-600">
-                <h6 class="text-sm text-white/50 font-semibold">LANGUAGE</h6>
-                <h6 class="text-white">{{ detail?.Language }}</h6>
-              </div>
-              <div class="flex flex-col">
-                <h6 class="text-sm text-white/50 font-semibold">BUDGET</h6>
-                <h6 class="text-white">{{ detail?.BoxOffice }}</h6>
-              </div>
-            </div>
-            <div class="overview">
-              <p class="text-sm text-red-400 xl:mt-6 lg:mt-6 md:mt-6 pt-4">OVERVIEW</p>
-              <p class="max-w-xl text-sm text-white xl:text-gray-800 lg:text-gray-800 md:text-gray-800 xl:mt-4 lg:mt-4 md:mt-4">
-                {{ detail?.Plot }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div  class="flex justify-center ">
-        <div class="w-11/12 xl:w-10/12 lg:w-10/12">
-          <h1 class="text-red-600 text-2xl font-semibold">Reviews</h1>
-        </div>
-      </div>
-      <div class=" w-11/12 xl:w-10/12 lg:w-10/12 mx-auto">
-        <swiper 
-          :slides-per-view="2" 
-          :space-between="20"
-          :centered-slides="true" 
-          :autoplay="{ delay: 3000 }" 
-          :pagination="{ clickable: true }"
-          :breakpoints="{
-            0: { slidesPerView: 1, spaceBetween: 10 },
-            768: { slidesPerView: 2, spaceBetween: 80 }
-          }"
-          class="w-full">
-          <swiper-slide v-for="review in reviews" :key="review.id" class="bg-gray-100 text-gray-800  shadow-md">
-              <div class="p-8">
-                <div class="flex">
-                  <img :src="review.avatar" alt="User avatar" class="w-10 h-10 rounded-full mr-3" width="40" height="40">
-                  <div class="flex flex-col">
-                    <h2 class="font-bold">{{ review.username }}</h2>
-                    <p class="text-gray-500 text-sm">{{ review.date }}</p>
-                  </div>
-                  <div class="ml-auto flex items-center bg-white p-2 rounded-lg shadow">
-                    <i class="fas fa-star text-yellow-500 mr-1"></i>
-                    <span class="font-bold text-lg flex items-center">
-                      ⭐ <span class="font-bold text-4xl">{{ review.rating }}</span>
-                    </span> 
-                  </div>
-                </div>
-                <p class="text-sm" v-html="review.content"></p>
-              </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-      <div class="flex justify-center gap-6 w-full mt-16 bg-[#1E232B]">
-        <div class="w-11/12 xl:w-10/12 lg:w-10/12">
-          <h6 class="my-6 text-xl font-bold py-6">RECOMMENDATION MOVIES</h6>
-          <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-10 justify-center">
-              <div v-for="(movie, i) in movies" :key="i" class="bg-[#1E232B] rounded overflow-hidden relative">
-                  <CardFilm :movie="movie" />
-              </div>
-          </div>
-        </div>
-      </div>
+     <div v-else class="">
+       <div class="mt-[-256px] xl:mt-[-216px] lg:mt-[-216px] md:mt-[-216px] flex justify-center w-full my-16">
+         <div class="flex gap-2 xl:gap-20 lg:gap-20 md:gap-20 w-11/12 xl:w-10/12 lg:w-10/12 ">
+           <div class="img w-full xl:w-auto lg:w-auto md:w-auto z-40">
+             <img :src="detail?.Poster" class="h-46 xl:h-[330px] lg:h-[330px] md:h-[330px] rounded-xl bg-white" alt="">
+           </div>
+           <div class="desc">
+             <div class="base">
+               <p class="text-md">{{ detail?.Year }}</p>
+               <h6 class="text-white text-xl xl:text-4xl lg:text-4xl md:text-4xl">{{ detail?.Title }}</h6>
+               <p class="text-white">
+                 {{ detail?.Type }}
+               </p>
+             </div>
+             <div class="complex gap-10 mt-16 hidden xl:flex lg:flex md:flex">
+               <div class="flex gap-x-4 pr-10 border-r-[2px] border-gray-600">
+                 <div class="text-4xl">⭐ {{ detail?.imdbRating }}</div>
+                 <div class="flex flex-col">
+                   <h6 class="text-sm text-gray-500">USER SCORE</h6>
+                   <h6 class="text-white">{{ detail?.imdbVotes }} VOTES</h6>
+                 </div>
+               </div>
+               <div class="flex flex-col pr-10 border-r-[2px] border-gray-600">
+                 <h6 class="text-sm text-white/50 font-semibold">STATUS</h6>
+                 <h6 class="text-white">{{ detail?.Released ? 'RELEASED' : '-'}}</h6>
+               </div>
+               <div class="flex flex-col pr-10 border-r-[2px] border-gray-600">
+                 <h6 class="text-sm text-white/50 font-semibold">LANGUAGE</h6>
+                 <h6 class="text-white">{{ detail?.Language }}</h6>
+               </div>
+               <div class="flex flex-col">
+                 <h6 class="text-sm text-white/50 font-semibold">BUDGET</h6>
+                 <h6 class="text-white">{{ detail?.BoxOffice }}</h6>
+               </div>
+             </div>
+             <div class="overview ">
+               <p class="text-sm text-red-400 xl:mt-6 lg:mt-6 md:mt-6 pt-4">OVERVIEW</p>
+               <p class="max-w-xl text-sm text-white xl:text-gray-800 lg:text-gray-800 md:text-gray-800 xl:mt-4 lg:mt-4 md:mt-4">
+                 {{ detail?.Plot }}
+               </p>
+             </div>
+           </div>
+         </div>
+       </div>
+       <div  class="flex justify-center ">
+         <div class="w-11/12 xl:w-10/12 lg:w-10/12">
+           <h1 class="text-red-600 text-2xl font-semibold">Reviews</h1>
+         </div>
+       </div>
+       <div class=" w-11/12 xl:w-10/12 lg:w-10/12 mx-auto">
+         <swiper 
+           :slides-per-view="2" 
+           :space-between="20"
+           :centered-slides="true" 
+           :autoplay="{ delay: 3000 }" 
+           :pagination="{ clickable: true }"
+           :breakpoints="{
+             0: { slidesPerView: 1, spaceBetween: 10 },
+             768: { slidesPerView: 2, spaceBetween: 80 }
+           }"
+           class="w-full">
+           <swiper-slide v-for="review in reviews" :key="review.id" class="bg-gray-100 text-gray-800  shadow-md">
+               <div class="p-8">
+                 <div class="flex">
+                   <img :src="review.avatar" alt="User avatar" class="w-10 h-10 rounded-full mr-3" width="40" height="40">
+                   <div class="flex flex-col">
+                     <h2 class="font-bold">{{ review.username }}</h2>
+                     <p class="text-gray-500 text-sm">{{ review.date }}</p>
+                   </div>
+                   <div class="ml-auto flex items-center bg-white p-2 rounded-lg shadow">
+                     <i class="fas fa-star text-yellow-500 mr-1"></i>
+                     <span class="font-bold text-lg flex items-center">
+                       ⭐ <span class="font-bold text-4xl">{{ review.rating }}</span>
+                     </span> 
+                   </div>
+                 </div>
+                 <p class="text-sm" v-html="review.content"></p>
+               </div>
+           </swiper-slide>
+         </swiper>
+       </div>
+       <div class="flex justify-center gap-6 w-full mt-16 bg-[#1E232B]">
+         <div class="w-11/12 xl:w-10/12 lg:w-10/12">
+           <h6 class="my-6 text-xl font-bold py-6">RECOMMENDATION MOVIES</h6>
+           <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-10 justify-center">
+               <div v-for="(movie, i) in movies" :key="i" class="bg-[#1E232B] rounded overflow-hidden relative">
+                   <CardFilm :movie="movie" />
+               </div>
+           </div>
+         </div>
+       </div>
+     </div>
   </DefaultLayout>
 </template>
 
