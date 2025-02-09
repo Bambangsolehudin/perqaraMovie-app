@@ -8,12 +8,13 @@
       </div>
   
       <p class="absolute top-0 right-0 bg-black/70 text-white font-bold text-2xl px-2 py-1 rounded">
-        {{ movie.rating }}
+        <!-- {{ movie.rating }} --> 
+          {{ movie?.imdbRating }}
       </p>
   
       <!-- Button View -->
       <div class="absolute inset-0 flex flex-col gap-10 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <h6 class="text-2xl">⭐ {{  movie.rating }}</h6>
+        <h6 class="text-2xl">⭐ {{  movie.imdbRating }}</h6>
         <h6 class="text-white text-xl">{{ movie.Type }}</h6>
         <button 
           @click.prevent="$router.push(`about?id=${movie?.imdbID}`)"

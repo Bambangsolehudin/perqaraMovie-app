@@ -95,7 +95,7 @@ export default {
         if (data.Search) {
           const newData = data.Search.map((movie) => ({
             ...movie,
-            rating: Math.floor(Math.random() * 3) + 7, // Rating random karena API tidak menyediakannya
+            // rating: Math.floor(Math.random() * 3) + 7, // Rating random karena API tidak menyediakannya
           }));
           const movieDetails = await Promise.all(
             newData.map(async (movie) => {
