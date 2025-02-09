@@ -3,7 +3,9 @@
     <div class="relative group"  @click.prevent="$router.push(`about?id=${movie?.imdbID}`)">
       <img :src="movie.Poster" alt="movie.title" class="w-full h-60 xl:h-82 lg:h-82 object-cover shadow-md" />
   
-      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/80 transition-colors duration-300"></div>
+      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/80 transition-colors duration-300">
+        
+      </div>
   
       <p class="absolute top-0 right-0 bg-black/70 text-white font-bold text-2xl px-2 py-1 rounded">
         {{ movie.rating }}

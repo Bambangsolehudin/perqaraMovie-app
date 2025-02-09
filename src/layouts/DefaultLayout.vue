@@ -122,12 +122,10 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 
 export default {
   props: ["bgImage"],
-  components: { Swiper, SwiperSlide },
   data() {
     return {
       searchQuery: '',
